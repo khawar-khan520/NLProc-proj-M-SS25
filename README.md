@@ -2,9 +2,6 @@
 
 Vector Search with FAISS and T5
 
-Overview
-This project demonstrates how to use vector search for efficient information retrieval from a large corpus of text and answer questions using the FAISS library and T5 model. It leverages the power of modern natural language processing (NLP) techniques, such as Sentence Transformers and FAISS, to retrieve and generate answers based on context.
-
 What is Vector Search?
 Vector search allows us to search through a large set of documents or text chunks using embeddings—numerical vector representations of the text. Each text chunk is converted into a vector using a model like Sentence-Transformers. FAISS (Facebook AI Similarity Search) is then used to perform fast similarity search, identifying the most relevant chunks based on a given query.
 
