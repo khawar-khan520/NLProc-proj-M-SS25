@@ -29,3 +29,25 @@ The top-k matching text chunks are then used as context for the T5 model, which 
 
 Why Use Vector Search?
 Vector search makes it possible to efficiently search through large datasets without having to rely on keyword-based searches, which can be less effective in understanding the true meaning of the text. By using embeddings, you ensure that the search captures the semantic similarity between the query and the text, making the system more effective at answering a wide range of questions.
+
+
+---
+
+## 🔍 Retriever Module
+
+We implemented a reusable `Retriever` class that supports:
+
+- Chunking and indexing text documents
+- Querying using natural language
+- Saving and loading with FAISS
+
+### ✅ Usage Example
+
+```python
+from retriever import Retriever
+
+r = Retriever()
+r.add_documents(["This is a test document about AI and NLP."])
+results = r.query("What is it about?")
+print(results[0])
+
