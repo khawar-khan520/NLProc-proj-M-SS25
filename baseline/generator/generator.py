@@ -8,18 +8,16 @@ class Generator:
         self.model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 
     def build_prompt(self, context, question):
-        return f"Answer the question based on the context.
+        prompt = (
+            "Answer the question based on the context.\n\n"
+            "Context:\n" + context + "\n\n"
+            "Question:\n" + question + "\n"
+        )
+        return prompt
 
-Context:
-{context}
-
-Question:
-{question}"
-
-    def generate_answer(self, context, question, max_tokens=100):
+    def generate_answer(self, context, question):
         prompt = self.build_prompt(context, question)
         inputs = self.tokenizer(prompt, return_tensors="pt", truncation=True)
         with torch.no_grad():
-            outputs = self.model.generate(**inputs, max_new_tokens=max_tokens)
+            outputs = self.model.generate(**inputs, max_new_tokens=100)
         return self.tokenizer.decode(outputs[0], skip_special_tokens=True)
-
