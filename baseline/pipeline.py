@@ -13,7 +13,8 @@ def run_pipeline(document_path, question):
     context = "\n\n".join(results)
 
     generator = Generator()
-    answer = generator.generate(context, question)
+    answer = generator.generate_answer(context, question)
+
 
     return answer
 
