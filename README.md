@@ -34,7 +34,11 @@ nlp_project/
 │   ├── retriever/
 │   │   └── retriever.py            # Document chunking, embedding, and FAISS retrieval
 │   └── pipeline.py                 # End-to-end pipeline script
+│
+├── retriever_data/                # Saved FAISS index and documents
 └── README.md                      # Project documentation (this file)
+
+
 🚀 Quick Start
 ✅ Install Requirements
 
@@ -85,12 +89,13 @@ FAISS then retrieves the top-k most semantically similar chunks to serve as cont
 The retriever supports saving and loading the FAISS index and document metadata for reuse without re-processing.
 
 ### 🧪 Retriever Class Overview:
-
 retriever = Retriever()
-retriever.add_documents(["winnie_the_pooh.txt"])
+retriever.add_documents(["myfile.txt"])
 retriever.save()  # Save index
 retriever.load()  # Load existing index
 results = retriever.query("What is FAISS?")
+
+
 
 ## 🧠 Generator Module
 
