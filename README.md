@@ -1,141 +1,121 @@
-# nlp_project
 
-Vector Search with FAISS and T5
-
-What is Vector Search?
-Vector search allows us to search through a large set of documents or text chunks using embeddings—numerical vector representations of the text. Each text chunk is converted into a vector using a model like Sentence-Transformers. FAISS (Facebook AI Similarity Search) is then used to perform fast similarity search, identifying the most relevant chunks based on a given query.
-
-How Does It Work?
-Text Embedding:
-The text (e.g., chapters, paragraphs) is split into smaller, manageable chunks.
-
-Each chunk is transformed into a fixed-length embedding vector using the SentenceTransformer model. These vectors capture the semantic meaning of the text.
-
-FAISS Indexing:
-
-The embeddings are indexed using FAISS. FAISS is an open-source library designed for efficient similarity search and clustering of dense vectors.
-
-The indexing process allows FAISS to quickly retrieve the nearest neighbor embeddings based on cosine similarity.
-
-Querying:
-
-When you enter a query, it is also transformed into an embedding vector using the same model.
-
-FAISS performs a similarity search to find the top-k most relevant text chunks by comparing the cosine similarity between the query embedding and the pre-stored chunk embeddings.
-
-Answer Generation:
-
-The top-k matching text chunks are then used as context for the T5 model, which generates an answer to the query based on the retrieved chunks.
-
-Why Use Vector Search?
-Vector search makes it possible to efficiently search through large datasets without having to rely on keyword-based searches, which can be less effective in understanding the true meaning of the text. By using embeddings, you ensure that the search captures the semantic similarity between the query and the text, making the system more effective at answering a wide range of questions.
+📚 NLP Project: Retrieval-Augmented Generation with FAISS & T5
 
 
----
+This project implements a Retrieval-Augmented Generation (RAG) pipeline that answers natural language questions using document context. It combines a document retriever (FAISS + SentenceTransformers) with a generator (T5) to generate grounded, context-aware answers.
 
-##  Retriever Module
+🧠 What is Vector Search?
+Vector search allows us to search through large sets of documents by converting text into semantic embeddings—numerical vector representations. Using Sentence-Transformers, we generate these embeddings, which are indexed using FAISS (Facebook AI Similarity Search) for fast and accurate similarity search.
 
-We implemented a reusable `Retriever` class that supports:
+⚙️ How the System Works
+🔹 1. Document Chunking
+Long documents are split into overlapping chunks (e.g., 200 tokens with 50-token overlap) to preserve semantic flow.
 
-- Chunking and indexing text documents
-- Querying using natural language
-- Saving and loading with FAISS
+🔹 2. Text Embedding
+Each chunk is converted into a fixed-length vector using the all-MiniLM-L6-v2 model from Sentence-Transformers.
 
-In this second task, we aim to:
+🔹 3. FAISS Indexing
+The embeddings are indexed with FAISS for fast nearest-neighbor search based on cosine similarity.
 
-Handle real documents like .txt, .md, or .pdf files.
+🔹 4. Querying
+When a question is asked, it is embedded and compared against the indexed vectors to retrieve the most relevant text chunks.
 
-Preprocess these documents and split them into smaller chunks.
+🔹 5. Answer Generation
+Top-k chunks are provided as context to the FLAN-T5 model, which generates a natural language answer.
 
-Index the chunks using FAISS.
+🧱 Project Structure
 
-Use FAISS to retrieve the most relevant document chunks for a given query.
+nlp_project/
+│
+├── baseline/
+│   ├── data/                       # Input data (e.g., .txt, .md, .pdf files)
+│   ├── generator/
+│   │   └── generator.py            # FLAN-T5 model for answer generation
+│   ├── retriever/
+│   │   └── retriever.py            # Document chunking, embedding, and FAISS retrieval
+│   └── pipeline.py                 # End-to-end pipeline script
+└── README.md                      # Project documentation (this file)
+🚀 Quick Start
+✅ Install Requirements
 
-How Does It Work?
-1. Document Chunking:
-Real documents, such as text files, markdown files, or PDFs, can be large and complex. To process them efficiently, they need to be split into manageable chunks. These chunks are typically smaller sections of text, such as sentences, paragraphs, or logical segments, that make sense on their own.
+pip install sentence-transformers faiss-cpu transformers torch
 
-The retriever uses a chunking function that splits large documents into smaller pieces while ensuring an overlap between consecutive chunks to improve retrieval accuracy.
 
-2. Text Embedding:
-Once the documents are chunked, each chunk is transformed into a vector embedding. This is done using the Sentence-Transformers library, which converts text into fixed-length vectors that capture the semantic meaning of the text. These embeddings are stored and indexed for fast retrieval.
+🗂️ Add Documents
+Put your .txt, .md, or .pdf files into the baseline/data/ folder.
 
-3. FAISS Indexing:
-The FAISS library (Facebook AI Similarity Search) is used to index the embeddings of the document chunks. FAISS enables efficient similarity search by organizing the embeddings in a way that allows for quick retrieval of the most relevant chunks for a given query.
+Example:
 
-FAISS works by calculating the cosine similarity between the query vector and the indexed embeddings, identifying the most similar chunks quickly.
+baseline/data/winnie_the_pooh.txt
+❓ Ask a Question
+Run the pipeline with:
 
-4. Querying:
-When a user enters a query, the query is also converted into a vector embedding. The retriever searches the FAISS index for the top-k most relevant chunks by comparing the query embedding with the pre-indexed document embeddings.
+python baseline/pipeline.py
+Example Output:
 
-5. Answer Generation:
-Once the top-k relevant chunks are retrieved, these chunks are used as context for generating an answer. In the final implementation, the T5 model (Text-to-Text Transfer Transformer) can be used to generate an answer based on the context provided by the top-k matching chunks.
+Who is always sad?
+➤ Answer: Eeyore is always sad.
 
-Key Concepts
-Vector Search:
-Vector search involves converting text into numerical vector representations, known as embeddings. These embeddings capture the meaning of the text, allowing for searches based on semantic similarity rather than exact word matches. This method is more effective for understanding the meaning behind a query and providing relevant results, especially in large datasets.
+🔍 Retriever Module
+The Retriever class handles:
 
-Chunking:
-Text is divided into smaller chunks, which are easier to process and index. This process ensures that each chunk is small enough to be accurately embedded and indexed.
+Text chunking with overlap
 
-FAISS:
-FAISS is a library developed by Facebook for efficient similarity search. It allows for the rapid retrieval of the nearest neighbors of a given vector, making it ideal for tasks that involve searching through large numbers of document embeddings.
+Embedding via SentenceTransformers
 
-T5 Model:
-The T5 (Text-to-Text Transfer Transformer) model is a versatile language model that can perform various NLP tasks, including answering questions. In this context, it is used to generate answers based on the relevant chunks retrieved by FAISS.
+FAISS-based vector indexing and search
 
-Steps for Implementing Task 2
-1. Feed Real Documents:
-The retriever should be able to process and handle real documents such as .txt, .md, or .pdf files.
+Save/load functionality
 
-Text Preprocessing: The text needs to be cleaned, removing unnecessary characters, and formatted correctly for chunking.
+Key Methods
+add_documents(texts): Chunks and indexes input texts
 
-2. Chunking Function:
-After preprocessing, the document is split into smaller chunks. This is done using a chunking function that takes into account the chunk size and possible overlap between consecutive chunks to ensure the context is preserved.
+query(question, top_k=3): Returns top-k relevant text chunks
 
-3. Indexing:
-The chunks are then embedded using Sentence-Transformers.
+save(path): Persists index and document state
 
-The embeddings are indexed using FAISS, allowing for efficient retrieval of the most relevant chunks based on cosine similarity.
+load(path): Loads previously saved state
 
-4. Querying and Retrieval:
-When a query is entered, it is transformed into a vector embedding.
+🧠 Generator Module
+The Generator class uses the google/flan-t5-base model to:
 
-FAISS is used to search for the top-k most relevant chunks based on the query embedding and the pre-stored document embeddings.
+Construct prompts with context and question
 
-5. Save and Load:
-The FAISS index and documents can be saved to disk and loaded later, ensuring that the state of the retriever is preserved between sessions. This can be done using methods like save() and load().
+Generate fluent, context-aware answers
 
-6. Testing:
-The retriever should be tested to ensure it returns the correct chunks based on given queries. This involves running a simple test with a document and a query to verify the expected results.
+📝 Example Usage (in pipeline.py)
 
-Methods of the Retriever Class
-add_documents(texts):
+from baseline.retriever.retriever import Retriever
+from baseline.generator.generator import Generator
 
-This method takes in a list of documents (texts), chunks them into smaller parts, and indexes them using FAISS.
+def run_pipeline(document_path, question):
+    with open(document_path, "r", encoding="utf-8") as f:
+        text = f.read()
 
-query(question, top_k=3):
+    retriever = Retriever()
+    retriever.add_documents([text])
+    results = retriever.query(question)
 
-Given a question, this method retrieves the top-k most relevant chunks from the indexed documents by comparing cosine similarity.
+    context = "\n\n".join(results)
+    generator = Generator()
+    answer = generator.generate_answer(context, question)
 
-save(path="retriever_data"):
+    return answer
+💾 Save & Load Retriever State
 
-Saves the FAISS index and documents to a specified directory. This is useful for persisting the retriever state for later use.
+retriever.save("retriever_data/")
+retriever.load("retriever_data/")
 
-load(path="retriever_data"):
+📬 Future Work
+Add support for .pdf and .md parsing
 
-Loads the FAISS index and documents from the saved directory, resuming the state of the retriever.
+Improve chunking strategy using NLP-based sentence segmentation
 
-Deliverables
-1. A retriever.py module with reusable class:
-The Retriever class handles document chunking, embedding, indexing, and querying.
+Integrate feedback loops for evaluation and improvement
 
-2. One or more loaded document sources:
-This includes the documents to be processed and indexed.
+Build a simple UI interface
 
-3. Working local search using queries:
-The retriever should allow users to search documents using queries and retrieve the most relevant chunks.
+👥 Authors
+Team Neurons
 
-4. Committed README update and usage instructions:
-The updated README file provides clear instructions on how to use the retriever, how to add documents, and how to query for answers.
-
+https://github.com/khawar-khan520/NLProc-proj-M-SS25/
