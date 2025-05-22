@@ -25,18 +25,16 @@ Top-k chunks are provided as context to the FLAN-T5 model, which generates a nat
 
 ## 🧱 Project Structure
 
-nlp_project/
-│
-├── baseline/
-│   ├── data/                       # Input data (e.g., .txt, .md, .pdf files)
-│   ├── generator/
-│   │   └── generator.py            # FLAN-T5 model for answer generation
-│   ├── retriever/
-│   │   └── retriever.py            # Document chunking, embedding, and FAISS retrieval
-│   └── pipeline.py                 # End-to-end pipeline script
-│
-├── retriever_data/                # Saved FAISS index and documents
-└── README.md                      # Project documentation (this file)
+- nlp_project/
+  - baseline/
+  - data/                 # Input data (.txt, .md, .pdf files)
+  - generator/
+    - generator.py        # FLAN-T5 answer generation model
+  - retriever/
+    - retriever.py        # Document chunking, embedding, FAISS retrieval
+  - pipeline.py           # End-to-end pipeline script
+  - retriever_data/       # Saved FAISS index and documents
+  - README.md             # Project documentation 
 
 
 🚀 Quick Start
