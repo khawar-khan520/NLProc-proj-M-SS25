@@ -2,22 +2,30 @@ import json
 from datetime import datetime
 from baseline.retriever.retriever import Retriever
 from baseline.generator.generator import Generator
+import os
 
+# Resolve document_path relative to this script (avoid hardcoded relative path issues)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+document_path = os.path.join(current_dir, "data", "winnie_the_pooh.txt")
+test_input_path = os.path.join(current_dir, "data", "test_inputs.json")
+log_path = os.path.join(current_dir, "..", "logs", "log.jsonl")  # Adjust path so logs folder is inside your repo root
 
 def log_interaction(log_path, question, retrieved_chunks, prompt, generated_answer, group_id=0):
     log_data = {
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.utcnow().isoformat() + "Z",
         "group_id": group_id,
         "question": question,
         "retrieved_chunks": retrieved_chunks,
         "prompt": prompt,
         "generated_answer": generated_answer
     }
+    os.makedirs(os.path.dirname(log_path), exist_ok=True)  # ensure logs folder exists
     with open(log_path, "a", encoding="utf-8") as f:
         f.write(json.dumps(log_data) + "\n")
 
-
-def run_pipeline_with_logging(document_path, question, group_id=0, log_path="logs/log.jsonl"):
+def run_pipeline_with_logging(document_path, question, group_id=0, log_path=log_path):
+    if not os.path.isfile(document_path):
+        raise FileNotFoundError(f"Document file not found: {document_path}")
     with open(document_path, "r", encoding="utf-8") as f:
         text = f.read()
 
@@ -30,7 +38,7 @@ def run_pipeline_with_logging(document_path, question, group_id=0, log_path="log
     prompt = generator.build_prompt(context, question)
     answer = generator.generate_answer(context, question)
 
-    # here to Log the interaction
+    # Log the interaction (question, context, prompt, answer, timestamp, group_id)
     log_interaction(
         log_path=log_path,
         question=question,
@@ -42,8 +50,10 @@ def run_pipeline_with_logging(document_path, question, group_id=0, log_path="log
 
     return answer
 
+def run_batch_tests(document_path, test_input_path=test_input_path, log_path=log_path):
+    if not os.path.isfile(test_input_path):
+        raise FileNotFoundError(f"Test input file not found: {test_input_path}")
 
-def run_batch_tests(document_path, test_input_path="baseline/data/test_inputs.json", log_path="logs/log.jsonl"):
     with open(test_input_path, "r", encoding="utf-8") as f:
         test_data = json.load(f)
 
@@ -59,12 +69,10 @@ def run_batch_tests(document_path, test_input_path="baseline/data/test_inputs.js
         print(f"Expected: {expected_answer}")
         print(f"Generated: {answer}\n{'-'*50}\n")
 
-
 if __name__ == "__main__":
-    # Run single test
-    document_path = "baseline/data/winnie_the_pooh.txt"
+    # Run single test example
     question = "Who is always sad?"
-    print(run_pipeline_with_logging(document_path, question))
+    print("Single test result:\n", run_pipeline_with_logging(document_path, question))
 
-    # this code is to run  the whole batch tests
+    # Run batch tests with logging
     run_batch_tests(document_path)

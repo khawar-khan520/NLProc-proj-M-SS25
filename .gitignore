@@ -1,0 +1,8 @@
+# Ignore PyCharm settings
+.idea/
+
+# Ignore Python bytecode
+__pycache__/
+
+# Ignore log files in future if i dont wanted any more
+# logs/
