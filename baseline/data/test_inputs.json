@@ -1,10 +1,14 @@
 [
   {
     "question": "Who is always sad?",
-    "answer": "Eeyore is always sad."
+    "expected_answer": "Eeyore"
   },
   {
-    "question": "What kind of animal is Winnie the Pooh?",
-    "answer": "Winnie the Pooh is a bear."
+    "question": "What is Pooh's favorite food?",
+    "expected_answer": "Honey"
+  },
+  {
+    "question": "Where do the characters live?",
+    "expected_answer": "The Hundred Acre Wood"
   }
 ]
