@@ -1,14 +1,5 @@
 [
-  {
-    "question": "Who is always sad?",
-    "expected_answer": "Eeyore"
-  },
-  {
-    "question": "What is Pooh's favorite food?",
-    "expected_answer": "Honey"
-  },
-  {
-    "question": "Where do the characters live?",
-    "expected_answer": "The Hundred Acre Wood"
-  }
+  {"question": "What are the symptoms of diabetes?"},
+  {"question": "How to manage high blood pressure?"},
+  {"question": "What causes migraine headaches?"}
 ]
