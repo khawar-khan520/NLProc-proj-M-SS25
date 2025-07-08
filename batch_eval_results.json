@@ -1,0 +1,62 @@
+[
+  {
+    "question": "what is diabetes?",
+    "expected_answer": "Diabetes is a chronic condition characterized by high blood sugar levels.",
+    "predicted_answer": "Type 1 diabetes, formerly called juvenile diabetes, is usually first diagnosed in children, teenagers, and young adults. In this type of diabetes, the beta cells of the pancreas no longer make insulin because the bodys immune system has attacked and destroyed them.",
+    "f1_score": 0.075
+  },
+  {
+    "question": "how to prevent heart attack?",
+    "expected_answer": "Follow a heart-healthy lifestyle, quit smoking, eat healthy, and exercise regularly.",
+    "predicted_answer": "You are at high risk for having a heart attack.",
+    "f1_score": 0.182
+  },
+  {
+    "question": "what is prevention of fever?",
+    "expected_answer": "To prevent fever, avoid infections by practicing good hygiene, stay hydrated, and maintain a healthy lifestyle.",
+    "predicted_answer": "It is part of your body's defense against infection.",
+    "f1_score": 0.0
+  },
+  {
+    "question": "what causes pneumonia?",
+    "expected_answer": "Pneumonia is caused by infections from bacteria, viruses, or fungi that inflame the lungs.",
+    "predicted_answer": "Bacteria, viruses, and fungican cause pneumonia.",
+    "f1_score": 0.3
+  },
+  {
+    "question": "how to treat weight loss?",
+    "expected_answer": "Weight loss treatment includes setting goals, improving diet, increasing physical activity, and sometimes medication.",
+    "predicted_answer": "Weight-loss treatments include medication and weight-loss surgery.",
+    "f1_score": 0.348
+  },
+  {
+    "question": "what are symptoms of diabetes?",
+    "expected_answer": "Symptoms include increased thirst, frequent urination, fatigue, and blurred vision.",
+    "predicted_answer": "A fasting plasma glucose, or FPG test, measures your blood glucose after you have gone at least 8 hours without eating. Doctors use this test to diagnose diabetes or prediabetes.",
+    "f1_score": 0.0
+  },
+  {
+    "question": "how to prevent high blood pressure?",
+    "expected_answer": "Prevent high blood pressure by reducing salt intake, exercising regularly, and maintaining a healthy weight.",
+    "predicted_answer": "Follow a healthy eating plan.",
+    "f1_score": 0.2
+  },
+  {
+    "question": "what is asthma?",
+    "expected_answer": "Asthma is a chronic lung disease that inflames and narrows the airways, causing difficulty breathing.",
+    "predicted_answer": "Asthma is a breathing disorder characterized by inflammation of the airways and recurrent episodes of breathing difficulty.",
+    "f1_score": 0.5
+  },
+  {
+    "question": "how to treat fever?",
+    "expected_answer": "Treat fever by resting, staying hydrated, and taking medications like acetaminophen or ibuprofen.",
+    "predicted_answer": "acetaminophen or ibuprofen",
+    "f1_score": 0.375
+  },
+  {
+    "question": "what is a heart attack?",
+    "expected_answer": "A heart attack occurs when blood flow to the heart is blocked, causing damage to heart muscle.",
+    "predicted_answer": "Heart attacks most often occur as a result of coronary heart disease (CHD), also called coronary artery disease.",
+    "f1_score": 0.114
+  }
+]
