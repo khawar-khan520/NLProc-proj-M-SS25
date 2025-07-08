@@ -1,157 +1,123 @@
+🤖 Medical QA System using Retrieval-Augmented Generation (RAG)
 
-# 📚 NLP Project: Retrieval-Augmented Generation with FAISS & T5
+This project implements a powerful RAG (Retrieval-Augmented Generation) pipeline for Medical Question Answering using state-of-the-art NLP models. It allows users to ask questions and get context-rich answers grounded in real medical data from MedQuAD.
 
+🧠 What is This Project About?
 
-This project implements a Retrieval-Augmented Generation (RAG) pipeline that answers natural language questions using document context. It combines a document retriever (FAISS + SentenceTransformers) with a generator (T5) to generate grounded, context-aware answers.
+This system acts as a Medical Assistant, answering health-related questions using evidence from trusted medical documents. It combines:
 
-## 🧠 What is Vector Search?
-Vector search allows us to search through large sets of documents by converting text into semantic embeddings—numerical vector representations. Using Sentence-Transformers, we generate these embeddings, which are indexed using FAISS (Facebook AI Similarity Search) for fast and accurate similarity search.
+🔍 Document retrieval using FAISS + Sentence Transformers
 
-## ⚙️ How the System Works
-🔹 1. Document Chunking
-Long documents are split into overlapping chunks (e.g., 200 tokens with 50-token overlap) to preserve semantic flow.
+🧾 Context-aware generation using FLAN-T5
 
-🔹 2. Text Embedding
-Each chunk is converted into a fixed-length vector using the all-MiniLM-L6-v2 model from Sentence-Transformers.
+📊 Evaluation tools using F1 score for accuracy checking
+
+Whether you're researching or building healthcare AI, this tool gives you medically grounded answers and supports interactive or batch evaluation.
+
+⚙️ How It Works
+
+🔹 1. Chunking Documents
+
+Long documents are split into overlapping chunks (e.g., 200 tokens with 50-token overlap) to preserve meaning and improve retrieval quality.
+
+🔹 2. Embedding with SentenceTransformers
+
+Each chunk is converted into a semantic vector using the all-MiniLM-L6-v2 model.
 
 🔹 3. FAISS Indexing
-The embeddings are indexed with FAISS for fast nearest-neighbor search based on cosine similarity.
 
-🔹 4. Querying
-When a question is asked, it is embedded and compared against the indexed vectors to retrieve the most relevant text chunks.
+The dense vectors are stored in a FAISS index for ultra-fast nearest neighbor search based on cosine similarity.
 
-🔹 5. Answer Generation
-Top-k chunks are provided as context to the FLAN-T5 model, which generates a natural language answer.
+🔹 4. Question Answering
 
-## 🧱 Project Structure
+User questions are embedded, matched to relevant chunks, and passed to FLAN-T5 to generate the final answer.
 
-- nlp_project/
-  - baseline/
-  - data/                 # Input data (.txt, .md, .pdf files)
-  - generator/
-    - generator.py        # FLAN-T5 answer generation model
-  - retriever/
-    - retriever.py        # Document chunking, embedding, FAISS retrieval
-  - pipeline.py           # End-to-end pipeline script
-  - retriever_data/       # Saved FAISS index and documents
-  - README.md             # Project documentation 
+🧪 Evaluation Modes
 
+✅ Interactive Evaluation
 
-🚀 Quick Start
-✅ Install Requirements
+Run interactive_eval.py
+
+Ask questions in the terminal
+
+See:
+
+Top 3 retrieved chunks 📚
+
+Answer from the model 🤖
+
+F1 score based on your question input 📊
+
+python interactive_eval.py
+
+✅ Batch Evaluation
+
+Run eval.py with a .json file of Q&A pairs
+
+Evaluates answers and computes F1 scores automatically
+
+python eval.py --input baseline/data/test_inputs.json
+
+Example test file:
+
+[
+  {"question": "What is diabetes?", "answer": "Diabetes is a chronic condition..."},
+  {"question": "How to prevent heart attack?", "answer": "Follow a heart-healthy lifestyle..."}
+]
+
+🧱 Project Structure
+
+NLProc-proj-M-SS25/
+├── baseline/
+│   ├── data/                # Input data (.csv or .txt)
+│   ├── retriever/           # FAISS-based retriever
+│   ├── generator/           # FLAN-T5 based generator
+│   ├── retriever_data/      # Saved FAISS index and doc chunks
+│   └── medquad.csv          # Medical Q&A data
+├── pipeline.py              # Main RAG pipeline logic
+├── interactive_eval.py      # Interactive terminal QA tool
+├── eval.py                  # Batch evaluation script (JSON-based)
+└── README.md
+
+📦 Installation
+
+pip install -r requirements.txt
+
+Or individually:
 
 pip install sentence-transformers faiss-cpu transformers torch
 
+💡 Example
 
-### 🗂️ Add Documents
-Put your .txt, .md, or .pdf files into the baseline/data/ folder.
+Enter question: what is prevention for heart attack?
 
-Example:
+📚 Top 3 Chunks:
+🔹 Chunk 1: Heart-Healthy Lifestyle (diet, exercise, manage diabetes...)
+🔹 Chunk 2: Risk factor management (smoking, weight, emergency plan...)
+🔹 Chunk 3: Cholesterol control, blood pressure treatment...
 
-baseline/data/winnie_the_pooh.txt
-❓ Ask a Question
-Run the pipeline with:
+🤖 Answer: Talk to your doctor about the signs of a heart attack.
+📊 F1 score (vs. input): 0.353
 
-python baseline/pipeline.py
-Example Output:
+🧑‍💻 Authors
 
-Who is always sad?
-➤ Answer: Eeyore is always sad.
+Team Neurons – Master’s Project @ University of Bamberg
 
-🧭 Retriever Module
-The Retriever class is designed to efficiently handle document ingestion, preprocessing, chunking, embedding, and similarity search using FAISS.
+GitHub: khawar-khan520/NLProc-proj-M-SS25
 
-## 🔨 How It Works:
-### Document Chunking
-Real-world documents like .txt, .md, or .pdf files can be long and unstructured. To enable efficient retrieval:
-The retriever splits large documents into smaller, manageable chunks.
-An overlap between consecutive chunks ensures contextual continuity.
-This approach improves retrieval performance by preserving semantic meaning across boundaries.
+🚀 Future Enhancements
 
-### Text Embedding
+Add UI for live demo
 
-Each chunk is passed through a SentenceTransformer model (e.g., all-MiniLM-L6-v2) to generate a dense vector (embedding) that captures its semantic content.
-These embeddings are stored in a NumPy array for indexing.
+PDF/Markdown support
 
-### FAISS Indexing
+Improve chunking with NLP sentence segmentation
 
-FAISS (Facebook AI Similarity Search) is used to build a fast similarity search index from the chunk embeddings.
-This allows efficient nearest-neighbor search using L2 or cosine similarity, even for large datasets.
+Add multilingual support
 
-### Querying
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------Enjoy exploring the intersection of AI + Medicine! 🩺📊🤖
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-A user’s query is also converted into an embedding using the same transformer model.
-FAISS then retrieves the top-k most semantically similar chunks to serve as context for answer generation.
-
-### Persistence
-The retriever supports saving and loading the FAISS index and document metadata for reuse without re-processing.
-
-### 🧪 Retriever Class Overview:
-retriever = Retriever()
-retriever.add_documents(["myfile.txt"])
-retriever.save()  # Save index
-retriever.load()  # Load existing index
-results = retriever.query("What is FAISS?")
-
-
-
-## 🧠 Generator Module
-
-The Generator class uses a text-to-text model (like Flan-T5) to generate fluent and context-aware answers based on retrieved information.
-
-## 🔍 How It Works:
-Prompt Construction
-
-A question is combined with the retrieved context chunks to form a structured prompt.
-
-This prompt follows an instruction format like:
-Answer the question based on the context.
-
-Context:
-<retrieved text from file>
-
-Question:
-<user's question>
-Answer Generation
-
-The prompt is tokenized and passed into the pretrained Flan-T5 model.
-The model generates an answer in natural language using the context.
-The output is decoded and returned as the final response.
-
-### ⚙️ Generator Class Overview:
-generator = Generator()
-context = "\n\n".join(retrieved_chunks)
-answer = generator.generate_answer(context, "What is vector search?")
-
-### 📝 Example Usage (in pipeline.py)
-
-from baseline.retriever.retriever import Retriever
-from baseline.generator.generator import Generator
-
-def run_pipeline(document_path, question):
-    with open(document_path, "r", encoding="utf-8") as f:
-        text = f.read()
-
-    retriever = Retriever()
-    retriever.add_documents([text])
-    results = retriever.query(question)
-
-    context = "\n\n".join(results)
-    generator = Generator()
-    answer = generator.generate_answer(context, question)
-
-    return answer
-    
-## 💾 Save & Load Retriever State
-
-retriever.save("retriever_data/")
-retriever.load("retriever_data/")
-
-## 📬 Future Work
-Add support for .pdf and .md parsing
-Improve chunking strategy using NLP-based sentence segmentation
-Integrate feedback loops for evaluation and improvement
-Build a simple UI interface
 
 ## 👥 Authors
 Team Neurons
