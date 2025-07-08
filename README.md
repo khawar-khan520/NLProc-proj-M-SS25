@@ -1,72 +1,79 @@
-🤖 Medical QA System using Retrieval-Augmented Generation (RAG)
+# 🤖 Medical QA System using Retrieval-Augmented Generation (RAG)
 
-This project implements a powerful RAG (Retrieval-Augmented Generation) pipeline for Medical Question Answering using state-of-the-art NLP models. It allows users to ask questions and get context-rich answers grounded in real medical data from MedQuAD.
+This project implements a powerful **RAG (Retrieval-Augmented Generation)** pipeline for **Medical Question Answering** using state-of-the-art NLP models. It allows users to ask questions and get context-rich answers grounded in real medical data from **MedQuAD**.
 
-🧠 What is This Project About?
+---
 
-This system acts as a Medical Assistant, answering health-related questions using evidence from trusted medical documents. It combines:
+## 🧠 What is This Project About?
 
-🔍 Document retrieval using FAISS + Sentence Transformers
+This system acts as a **Medical Assistant**, answering health-related questions using evidence from trusted medical documents. It combines:
 
-🧾 Context-aware generation using FLAN-T5
-
-📊 Evaluation tools using F1 score for accuracy checking
+- 🔍 **Document retrieval** using FAISS + Sentence Transformers
+- 🧾 **Context-aware generation** using FLAN-T5
+- 📊 **Evaluation tools** using F1 score for accuracy checking
 
 Whether you're researching or building healthcare AI, this tool gives you medically grounded answers and supports interactive or batch evaluation.
 
-⚙️ How It Works
+---
 
-🔹 1. Chunking Documents
+## ⚙️ How It Works
+
+### 🔹 1. Chunking Documents
 
 Long documents are split into overlapping chunks (e.g., 200 tokens with 50-token overlap) to preserve meaning and improve retrieval quality.
 
-🔹 2. Embedding with SentenceTransformers
+### 🔹 2. Embedding with SentenceTransformers
 
-Each chunk is converted into a semantic vector using the all-MiniLM-L6-v2 model.
+Each chunk is converted into a semantic vector using the `all-MiniLM-L6-v2` model.
 
-🔹 3. FAISS Indexing
+### 🔹 3. FAISS Indexing
 
 The dense vectors are stored in a FAISS index for ultra-fast nearest neighbor search based on cosine similarity.
 
-🔹 4. Question Answering
+### 🔹 4. Question Answering
 
-User questions are embedded, matched to relevant chunks, and passed to FLAN-T5 to generate the final answer.
+User questions are embedded, matched to relevant chunks, and passed to **FLAN-T5** to generate the final answer.
 
-🧪 Evaluation Modes
+---
 
-✅ Interactive Evaluation
+## 🧪 Evaluation Modes
 
-Run interactive_eval.py
+### ✅ Interactive Evaluation
 
-Ask questions in the terminal
+- Run `interactive_eval.py`
+- Ask questions in the terminal
+- See:
+  - Top 3 retrieved chunks 📚
+  - Answer from the model 🤖
+  - F1 score based on your question input 📊
 
-See:
-
-Top 3 retrieved chunks 📚
-
-Answer from the model 🤖
-
-F1 score based on your question input 📊
-
+```bash
 python interactive_eval.py
+```
 
-✅ Batch Evaluation
+### ✅ Batch Evaluation
 
-Run eval.py with a .json file of Q&A pairs
+- Run `eval.py` with a `.json` file of Q&A pairs
+- Evaluates answers and computes F1 scores automatically
 
-Evaluates answers and computes F1 scores automatically
-
+```bash
 python eval.py --input baseline/data/test_inputs.json
+```
 
 Example test file:
 
+```json
 [
   {"question": "What is diabetes?", "answer": "Diabetes is a chronic condition..."},
   {"question": "How to prevent heart attack?", "answer": "Follow a heart-healthy lifestyle..."}
 ]
+```
 
-🧱 Project Structure
+---
 
+## 🧱 Project Structure
+
+```
 NLProc-proj-M-SS25/
 ├── baseline/
 │   ├── data/                # Input data (.csv or .txt)
@@ -78,17 +85,27 @@ NLProc-proj-M-SS25/
 ├── interactive_eval.py      # Interactive terminal QA tool
 ├── eval.py                  # Batch evaluation script (JSON-based)
 └── README.md
+```
 
-📦 Installation
+---
 
+## 📦 Installation
+
+```bash
 pip install -r requirements.txt
+```
 
 Or individually:
 
+```bash
 pip install sentence-transformers faiss-cpu transformers torch
+```
 
-💡 Example
+---
 
+## 💡 Example
+
+```
 Enter question: what is prevention for heart attack?
 
 📚 Top 3 Chunks:
@@ -98,28 +115,27 @@ Enter question: what is prevention for heart attack?
 
 🤖 Answer: Talk to your doctor about the signs of a heart attack.
 📊 F1 score (vs. input): 0.353
+```
 
-🧑‍💻 Authors
+---
+
+## 🧑‍💻 Authors
 
 Team Neurons – Master’s Project @ University of Bamberg
 
-GitHub: khawar-khan520/NLProc-proj-M-SS25
+GitHub: [khawar-khan520/NLProc-proj-M-SS25](https://github.com/khawar-khan520/NLProc-proj-M-SS25)
 
-🚀 Future Enhancements
+---
 
-Add UI for live demo
+## 🚀 Future Enhancements
 
-PDF/Markdown support
+- Add UI for live demo
+- PDF/Markdown support
+- Improve chunking with NLP sentence segmentation
+- Add multilingual support
 
-Improve chunking with NLP sentence segmentation
+---
 
-Add multilingual support
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Enjoy exploring the intersection of AI + Medicine! 🩺📊🤖
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Enjoy exploring the intersection of **AI + Medicine**! 🩺📊🤖
 
 
-## 👥 Authors
-Team Neurons
-
-https://github.com/khawar-khan520/NLProc-proj-M-SS25/
